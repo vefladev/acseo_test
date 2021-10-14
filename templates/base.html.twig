@@ -27,9 +27,20 @@
 						<li class="nav-item">
 							<a class="{{ app.request.get('_route') == 'home' ? 'active' }} nav-link" href="/">Accueil</a>
 						</li>
-						<li class="nav-item>">
-							<a class="nav-link" href="/register">Se connecter</a>
+						{% if is_granted('ROLE_USER') %}
+							<li class="nav-item>">
+								<a class="nav-link" href="/">Mon Espace</a>
+							</li>
+							<li class="nav-item>">
+								<a class="nav-link" href="/logout">Se déconnecter</a>
+							</li>
+						{% else %}
+							<li class="nav-item>">
+								<a class="nav-link" href="/login">Se connecter</a>
+							{% endif %}
 						</li>
+
+
 					</div>
 				</div>
 			</nav>
