@@ -6,11 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -47,10 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $prenom;
 
-    /**
-     * @ORM\Column(type="array")
-     */
-    private $role = [];
 
     /**
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="user_id")
@@ -175,18 +173,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRole(): ?array
-    {
-        return $this->role;
-    }
-
-    public function setRole(array $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Message[]
      */
@@ -199,7 +185,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
-            $message->setUserId($this);
+            $message->setUser($this);
         }
 
         return $this;
@@ -209,8 +195,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)
-            if ($message->getUserId() === $this) {
-                $message->setUserId(null);
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
             }
         }
 
