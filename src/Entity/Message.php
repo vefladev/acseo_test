@@ -29,6 +29,11 @@ class Message
      */
     private $content;
 
+    /**
+     * @ORM\Column(type="boolean", options={"default":"0"})
+     */
+    private $done;
+
 
     public function getId(): ?int
     {
@@ -55,6 +60,18 @@ class Message
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getDone(): ?bool
+    {
+        return $this->done;
+    }
+
+    public function setDone(?bool $done): self
+    {
+        $this->done = $done;
 
         return $this;
     }

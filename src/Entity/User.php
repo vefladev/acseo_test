@@ -178,7 +178,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->nom . ' ' . $this->prenom;
+        return $this->getNom() . ' ' . $this->getPrenom();
     }
 
     /**

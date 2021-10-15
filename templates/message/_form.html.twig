@@ -1,4 +1,23 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
-<button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<div class="container">
+	<br>
+	<div class="card bg-light">
+		<article class="card-body mx-auto" style="max-width: 400px;">
+			<h3 class="card-title mt-3 text-center">Écrivez votre demande ici :</h3>
+			<br>
+			{{ form_errors(form) }}
+			<div class="form-group input-group text-center">
+				{{ form_row(form.content) }}
+			</div>
+			<div class="form-group">
+				<p>Signé:
+					{{app.user.prenom}}
+					{{app.user.nom}}</p>
+			</div>
+			<div class="form-group">
+				<button class="btn btn-primary">{{ button_label|default('Envoyer votre demande') }}</button>
+			</div>
+		</article>
+	</div>
+
+	{{ form_end(form) }}
