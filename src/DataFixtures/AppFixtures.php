@@ -2,11 +2,14 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\User;
+use DateTimeImmutable;
+use App\Entity\Message;
+use Faker\Provider\DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Faker\Factory;
 
 class AppFixtures extends Fixture
 {
@@ -16,6 +19,7 @@ class AppFixtures extends Fixture
     {
         $this->encoder = $encoder;
     }
+
     // les fixtures sont des fausses données qu'on peut charger dans la bdd pour des tests
     public function load(ObjectManager $manager)
     {
@@ -44,6 +48,17 @@ class AppFixtures extends Fixture
 
 
             $manager->persist($user);
+
+
+            for ($m = 0; $m <= mt_rand(3, 6); $m++) {
+                $message  = new Message;
+                $message->setUser($user);
+                $message->setContent($faker->paragraph());
+                $message->setDone(0);
+                $message->setCreatedAt($faker->dateTimeBetween('-1 week'));
+
+                $manager->persist($message);
+            }
         }
 
         $manager->flush();

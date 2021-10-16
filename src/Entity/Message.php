@@ -34,6 +34,16 @@ class Message
      */
     private $done;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+    }
+
 
     public function getId(): ?int
     {
@@ -72,6 +82,18 @@ class Message
     public function setDone(?bool $done): self
     {
         $this->done = $done;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

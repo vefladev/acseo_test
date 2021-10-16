@@ -26,9 +26,9 @@ class MessageRepository extends ServiceEntityRepository
     public function groupByUser()
     {
         return $this->createQueryBuilder('m')
-            ->select('u')
-            ->from(Message::class, 'u', 'u.id')
-            ->groupBy('u')
+            // ->orderBy('m.user', "desc")
+            // ->from(Message::class, 'u', 'u.id')
+            ->groupBy('m.user')
             ->getQuery()
             ->getResult();
         // createQueryBuilder('m')

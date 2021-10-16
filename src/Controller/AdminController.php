@@ -60,7 +60,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('admin/message/{id}/edit', name: 'message_edit', methods: ['GET','POST'])]
+    #[Route('admin/message/{id}/edit', name: 'message_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Message $message): Response
     {
         $form = $this->createForm(MessageType::class, $message);
