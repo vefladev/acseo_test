@@ -1,8 +1,48 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!
+{% block title %}Back Office
 {% endblock %}
 
 {% block body %}
-	<h2>BIENVENUE ADMIN</h2>
-{% endblock %}
+	<br>
+	<h4>Bonjour
+		{{app.user.prenom}}
+		{{app.user.nom}}
+	</h4>
+	<br>
+	<h4>
+		Voici les demandes à traitées:</h4>
+	<br>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Nom</th>
+				{# <th>nombre</th> #}
+				{# <th>Traiter</th> #}
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for message in messages %}
+				{% if message.done == 0 %}
+					<tr>
+						<td>
+							{{ message.user.email}}
+						</td>
+						{# <td>{{ message.user|length }}</td> #}
+						<td>
+							<a href="{{ path('message_show', {'id': message.id}) }}">
+								Voir</a>
+							{# <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a> #}
+						</td>
+					</tr>
+				{% endif %}
+			{% else %}
+				<tr>
+					<td colspan="3">Aucun résultat</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>
+<a href="{{ path('message_traite') }}">Voir les demandes déjà traités</a>{% endblock %}

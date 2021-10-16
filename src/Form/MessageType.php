@@ -31,7 +31,8 @@ class MessageType extends AbstractType
                 'class' => User::class,
                 'label' => ' ',
                 'attr' => ['hidden' => 'true']
-            ]);
+            ])
+            ->add('done');
         if (!$user) {
             throw new \LogicException(
                 "Vous ne pouvez pas envoyer de message si vous n'êtes pas identifié!"
