@@ -23,41 +23,36 @@ class MessageRepository extends ServiceEntityRepository
     /**
      * @return Message[] Returns an array of Message objects
      */
-    public function groupByUser()
+    public function sortByDate()
     {
-        return $this->createQueryBuilder('m')
-            // ->orderBy('m.user', "desc")
-            // ->from(Message::class, 'u', 'u.id')
-            ->groupBy('m.user')
+        // "SELECT (`message.user`) as userMessages FROM `message` GROUP BY userMessages"
+        return $this->createQueryBuilder("m")
+            ->orderBy('m.createdAt', 'ASC')
             ->getQuery()
             ->getResult();
-        // createQueryBuilder('m')
-        //     ->select("user")
-        // ->join("message.user", "user")
-        // ->where('message.user = :user')
-        // ->groupBy("user")
-        // ->setParameters($parameters)
-        // ->getQuery();
-        // ->getResult();
-
-        // return $this->createQueryBuilder('m')
-        //     ->andWhere('m.user = :user')
-        //     // ->setParameter('message',)
-        //     ->groupBy('m.email')
-        //     ->setMaxResults(10)
-        //     ->getQuery()
-        //     ->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?Message
+    /**
+     * @return Message[] Returns an array of Message objects
+     */
+    public function countMessageNotDoneByUser()
     {
+        // 'SELECT (`m.user`) as userMessages, COUNT(`message.id`) as count FROM `message` GROUP BY userMessages'
         return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
+            ->join('m.user', 'u')
+            // ->select('COUNT(u) as count')
+            // ->groupBy('u')
+            ->where('m.done = 0')
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
+    // public function countMessageByUser()
+    // {
+    //     return $this->createQueryBuilder('m')
+    //         ->select('(m.user) as userMessages, COUNT(m.id) as count')
+    //         ->groupBy('userMessages')
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 }

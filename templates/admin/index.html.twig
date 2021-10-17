@@ -16,33 +16,29 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Nom</th>
-				{# <th>nombre</th> #}
-				{# <th>Traiter</th> #}
+				<th>Email</th>
+				<th>Utilisateur</th>
+				<th>Nombre de demande</th>
 				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for message in messages %}
-				{% if message.done == 0 %}
-					<tr>
-						<td>
-							{{ message.user.email}}
-						</td>
-						{# <td>{{ message.user|length }}</td> #}
-						<td>
-							<a href="{{ path('message_show', {'id': message.id}) }}">
-								Voir</a>
-							{# <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a> #}
-						</td>
-					</tr>
-				{% endif %}
-			{% else %}
+				{# {% if message.done == 0 %} #}
 				<tr>
-					<td colspan="3">Aucun résultat</td>
+					<td>
+						{{ message.user.email }}
+					</td>
+					<td>{{ message.user}}</td>
+					<td>
+						{# {{ message.count }} #}
+					</td>
+					<td>
+						<a href="{{ path('user_show', {'id': message.user.id}) }}">
+							Voir</td>
+					</td>
 				</tr>
-			{% endfor %}
+			</td>
 		</tbody>
-	</tbody>
-</table>
-<a href="{{ path('message_traite') }}">Voir les demandes déjà traités</a>{% endblock %}
+	</tr>
+</td></tbody></tr></a>{# <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a> #}</tbody></td></tr>{# {% endif %} #}{% else %}<tr><td colspan="3">Aucun résultat</td></tr>{% endfor %}</tbody></tbody> </table> <a href="{{ path('message_traite') }}">Voir les demandes déjà traités</a>{% endblock %}

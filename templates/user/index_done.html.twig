@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Back Office
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="col-12 mx auto">
+			<br>
+			<h2>Bienvenue sur le Back Office d'administration</h2>
+			<br>
+			<h3>Voici les utilisateurs avec des demandes déjà traitées:</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Utilisateur</th>
+						<th>Email</th>
+						<th>Nombre de demandes déjà traitées</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for um in userMessages %}
+						{% if um | length > 0  %}
+							<tr>
+								<td>
+									<a href="{{ path('user_show_done' , {'id': um.id}) }}">{{ um.fullName }}</a>
+								</td>
+								<td>{{ um.email }}</td>
+								<td>{{ um.messages | length }}</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="7">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</table>
+		<a class="btn btn-primary" href="{{ path('user_index') }}">Voir les demandes traitées</a>
+	</div>
+</div>{% endblock %}

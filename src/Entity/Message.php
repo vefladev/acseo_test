@@ -39,6 +39,11 @@ class Message
      */
     private $createdAt;
 
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $doneAt;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -94,6 +99,23 @@ class Message
     public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getId();
+    }
+
+    public function getDoneAt(): ?\DateTimeImmutable
+    {
+        return $this->doneAt;
+    }
+
+    public function setDoneAt(?\DateTimeImmutable $doneAt): self
+    {
+        $this->doneAt = $doneAt;
 
         return $this;
     }

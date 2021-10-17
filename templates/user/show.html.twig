@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demandes en cours de
+	{{user.fullName}}
+{% endblock %}
+
+{% block body %}
+
+	<br>
+	<div class="container">
+		<div class="col-8 mx-auto">
+			<h2>
+				Demandes en cours de</h2>
+			<h3>{{user.fullName}}:</h3>
+			<br>
+			<h5>
+				Email :
+				{{user.email}}</h5>
+			<br>
+			{% for message in messages %}
+				{% if message.done == 0 %}
+					<div class="card">
+						<h5 class="card-header">
+							<small>Par
+								{{user.fullName}}
+								le
+								{{message.createdAt | date('d/m/Y')}}
+								à
+								{{message.createdAt | date('H:i')}}</small>
+						</h5>
+						<div class="card-body">
+							<p class="card-text">{{message.content}}</p>
+							{{ include('user/_done.html.twig') }}
+
+						</div>
+					</div>
+					<br>
+				{% endif %}
+			{% endfor %}
+			<a class="btn btn-secondary" href="{{ path('user_index') }}">Retour</a>
+			<br>
+			<br>
+		</div>
+	</div>
+	{# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
+{% endblock %}

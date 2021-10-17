@@ -2,12 +2,9 @@
 
 namespace App\Controller;
 
-// use App\Entity\Message;
 use App\Entity\Message;
-use App\Entity\User;
 use App\Form\MessageType;
 use App\Repository\MessageRepository;
-use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,24 +17,31 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'admin', methods: ['GET'])]
-    public function index(MessageRepository $messageRepository, UserRepository $userRepository): Response
+    public function index(MessageRepository $messageRepository): Response
     {
-        $user = $this->getUser();
-        $user->getMessages();
-        dump($user);
+        // $message = $messageRepository->findBy(['user' => '70']);
+        dump($messageRepository->countMessageByUser());
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'AdminController',
-            // 'messages' => $messageRepository->findAll(),
-            // 'users' => $userRepository->findAll(),
-            'messages' => $messageRepository->findAll()
-            // 'listUsers' => $listUsers
+            // 'messages' => $messageRepository->sortByDate()
+            'messages' => $messageRepository->groupByUser(),
+            'count' => $messageRepository->countMessageByUser()
         ]);
     }
 
-    #[Route('/admin/message_traite', name: 'message_traite', methods: ['GET'])]
-    public function viewDone(MessageRepository $messageRepository): Response
+    // #[Route('/admin/message_traite', name: 'message_traite', methods: ['GET'])]
+    // public function viewDone(MessageRepository $messageRepository): Response
+    // {
+    //     return $this->render('admin/message_traite.html.twig', [
+    //         'controller_name' => 'AdminController',
+    //         'messages' => $messageRepository->findAll(),
+    //     ]);
+    // }
+
+    #[Route('/admin/show_messages', name: 'show_messages', methods: ['GET'])]
+    public function showMessages(MessageRepository $messageRepository): Response
     {
-        return $this->render('admin/message_traite.html.twig', [
+        return $this->render('admin/show_messages.html.twig', [
             'controller_name' => 'AdminController',
             'messages' => $messageRepository->findAll(),
         ]);
@@ -95,11 +99,7 @@ class AdminController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $message->setDone(true);
         $em->flush();
-        dump($message);
-        // $message->getId();
-        // $message->setDone(1);
-        // $this->getDoctrine()->getManager()->flush();
 
-        return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
     }
 }
