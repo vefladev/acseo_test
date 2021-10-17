@@ -7,6 +7,8 @@ use App\Form\UserType;
 use App\Entity\Message;
 use App\Repository\UserRepository;
 use App\Repository\MessageRepository;
+use DateTime;
+use DateTimeImmutable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -119,6 +121,7 @@ class UserController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $message->setDone(true);
+        $message->setDoneAt(new DateTimeImmutable());
         $em->flush();
 
         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);

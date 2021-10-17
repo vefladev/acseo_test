@@ -21,12 +21,18 @@
 				{% if message.done == 1 %}
 					<div class="card">
 						<h5 class="card-header">
-							<small>Par
+							<small style="color: blue">Par
 								{{user.fullName}}
 								le
 								{{message.createdAt | date('d/m/Y')}}
 								à
-								{{message.createdAt | date('H:i')}}</small>
+								{{message.createdAt | date('H:i')}}</small><br>
+							{% if message.doneAt %}
+								<small style="color: red">Traité le
+									{{message.doneAt | date('d/m/Y')}}
+									à
+									{{message.doneAt | date('H:i')}}</small>
+							{% endif %}
 						</h5>
 						<div class="card-body">
 							<p class="card-text">{{message.content}}</p>

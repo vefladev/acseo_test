@@ -32,12 +32,12 @@
 						{% endif %}
 					{% else %}
 						<tr>
-							<td colspan="7">no records found</td>
+							<td colspan="7">Pas encore de demande traitée</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</tbody>
 		</table>
-		<a class="btn btn-primary" href="{{ path('user_index') }}">Voir les demandes traitées</a>
+		<a class="btn btn-primary" href="{{ path('user_index') }}">Voir les demandes à traiter</a>
 	</div>
 </div>{% endblock %}

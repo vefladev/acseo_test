@@ -47,6 +47,7 @@ class Message
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->doneAt = new \DateTimeImmutable();
     }
 
 

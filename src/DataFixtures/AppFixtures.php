@@ -4,9 +4,7 @@ namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\User;
-use DateTimeImmutable;
 use App\Entity\Message;
-use Faker\Provider\DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -25,7 +23,7 @@ class AppFixtures extends Fixture
     {
 
         $faker = Factory::create('fr_FR');
-
+        // création d'un faux admin
         $admin  = new User;
         $admin->setPrenom($faker->firstName());
         $admin->setNom($faker->lastName());
@@ -36,14 +34,18 @@ class AppFixtures extends Fixture
 
         $manager->persist($admin);
 
-
+        // création d'un faux jeu de données users avec les données crée par faker
         for ($u = 0; $u < 5; $u++) {
             $user  = new User;
             $nom = $faker->lastName();
             $prenom = $faker->firstName();
             $user->setNom($nom);
             $user->setPrenom($prenom);
-            $user->setEmail("$nom.$prenom@mail.com");
+            // on met la première lettre en minuscule seulement pour l'email
+            $nomM =  lcfirst($nom);
+            $prenomM =  lcfirst($prenom);
+            $user->setEmail("$nomM.$prenomM@mail.com");
+            // on encode le mot de passe
             $password = $this->encoder->hashPassword($user, 'user');
             $user->setPassword($password);
             $user->setRoles(["ROLE_USER"]);
@@ -51,12 +53,13 @@ class AppFixtures extends Fixture
 
             $manager->persist($user);
 
-
+            // création d'un faux jeu de données messages par rapport aux users
             for ($m = 0; $m <= mt_rand(3, 6); $m++) {
                 $message  = new Message;
                 $message->setUser($user);
                 $message->setContent($faker->paragraph());
                 $message->setDone(0);
+                // date entre il y a une semaine et aujourd'hui
                 $message->setCreatedAt($faker->dateTimeBetween('-1 week'));
 
                 $manager->persist($message);
