@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
 use DateTimeImmutable;
 use App\Entity\Message;
 use App\Repository\UserRepository;
@@ -26,7 +25,6 @@ class AdminController extends AbstractController
     {
         // la vue que la méthode me retourne
         return $this->render('admin/index.html.twig', [
-            // 'users' => $userRepository->findAll(),
             // ma requête personalisé qui me permet de récupérer seulement les messages non traités
             'userMessages' => $userRepository->countMessageNotDoneByUser(),
         ]);
@@ -38,7 +36,6 @@ class AdminController extends AbstractController
         // la vue que la méthode me retourne
         return $this->render('admin/index_done.html.twig', [
             'controller_name' => 'UserController',
-            // 'messages' => $messageRepository->findAll(),
             // ma requête personalisé qui me permet de récupérer seulement les messages traités
             'userMessages' => $userRepository->countMessageDoneByUser(),
 
@@ -46,7 +43,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
-    public function show(User $user, MessageRepository $messageRepository, Request $request): Response
+    public function show(User $user, MessageRepository $messageRepository): Response
     {
         // me permet de retourné tout les messages non traités d'un utilisateur 
         return $this->render('admin/show.html.twig', [

@@ -85,7 +85,7 @@ class MessageController extends AbstractController
         // la vue que la méthode me retourne
         return $this->render('message/index.html.twig', [
             // ma requête personalisé qui me permet de récupérer seulement les messages du user connecté
-            'messages' => $messageRepository->findBy(['user' => $user], ['createdAt' => 'ASC'])
+            'messages' => $messageRepository->findBy(['user' => $user], ['createdAt' => 'DESC'])
         ]);
     }
 }

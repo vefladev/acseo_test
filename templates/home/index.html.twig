@@ -7,13 +7,15 @@
 {% block body %}
 	<br>
 	<br>
-	{% if not is_granted('ROLE_USER') %}
-		<div class-"container" style="text-align: center">
-			<h1>Bienvenue!</h1>
+	{# page d'accueil #}
+	{# si on est connécté, on affiche ça : #}
+		{% if not is_granted('ROLE_USER') %}
+			<div class-"container" style="text-align: center"> <h1>Bienvenue!</h1>
 			<h3>Veuillez vous connecter pour toutes demandes</h3>
 			<br>
 			<a href="/login" class="btn btn-primary">Se Connecter</a>
 		</div>
+		{# sinon, ça: #}
 	{% else %}
 		<div class-"container" style="text-align: center">
 			<h3>Bonjour

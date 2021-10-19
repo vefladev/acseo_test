@@ -28,9 +28,11 @@
 								</td>
 								<td>{{ um.email }}</td>
 								<td>
-									<span style="padding: 12px; background-color: green; margin-left: 110px" class="badge badge-primary badge-pill">
-										<strong>{{ um.messages | length }}</strong>
-									</span>
+									<a href="{{ path('user_show_done' , {'id': um.id}) }}">
+										<span style="padding: 12px; background-color: green; margin-left: 110px" class="badge badge-primary badge-pill">
+											<strong>{{ um.messages | length }}</strong>
+										</span>
+									</a>
 								</td>
 							</tr>
 						{% endif %}

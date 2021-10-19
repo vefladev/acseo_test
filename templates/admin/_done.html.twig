@@ -1,9 +1,4 @@
+{# bouton permettant le traitement du message #}
 <form method="post" action="{{ path('message_traitement', {'id': message.id}) }}" onsubmit="return confirm('Avez vous bien traité cette demande ?');">
 	<button class="btn btn-primary">Définir comme traitée</button>
 </form>
-{# <form method="post">
-	&nbsp;
-	<input class="form-check-input" type="checkbox" name="doneM[]" value="{{message.id}}">
-	<label class="form-check-label" for="done">Definir comme traité</label>
-	<button type="submit">Enregistrer</button>
-</form> #}
