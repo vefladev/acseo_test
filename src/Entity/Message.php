@@ -44,6 +44,7 @@ class Message
      */
     private $doneAt;
 
+    // constructeur qui permet de créer des dates avec la date ou est créer / traité la demande 
     public function __construct()
     {
         $this->createdAt = new \DateTime();

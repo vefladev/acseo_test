@@ -41,6 +41,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      */
     public function countMessageNotDoneByUser()
     {
+        // requête personalisé pour récupérer seulement les messages non traités
         return $this->createQueryBuilder('u')
             ->select('u', 'm')
             ->join('u.messages', 'm')
@@ -54,6 +55,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      */
     public function countMessageDoneByUser()
     {
+        // requête personalisé pour récupérer seulement les messages traités
         return $this->createQueryBuilder('u')
             ->select('u', 'm')
             ->join('u.messages', 'm')

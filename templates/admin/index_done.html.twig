@@ -27,7 +27,11 @@
 									<a href="{{ path('user_show_done' , {'id': um.id}) }}">{{ um.fullName }}</a>
 								</td>
 								<td>{{ um.email }}</td>
-								<td>{{ um.messages | length }}</td>
+								<td>
+									<span style="padding: 12px; background-color: green; margin-left: 110px" class="badge badge-primary badge-pill">
+										<strong>{{ um.messages | length }}</strong>
+									</span>
+								</td>
 							</tr>
 						{% endif %}
 					{% else %}

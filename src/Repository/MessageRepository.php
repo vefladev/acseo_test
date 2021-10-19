@@ -25,33 +25,22 @@ class MessageRepository extends ServiceEntityRepository
      */
     public function sortByDate()
     {
-        // "SELECT (`message.user`) as userMessages FROM `message` GROUP BY userMessages"
+        // requête perso pour trier les message du plus ancien au plus récent
         return $this->createQueryBuilder("m")
             ->orderBy('m.createdAt', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    /**
-     * @return Message[] Returns an array of Message objects
-     */
-    public function countMessageNotDoneByUser()
-    {
-        // 'SELECT (`m.user`) as userMessages, COUNT(`message.id`) as count FROM `message` GROUP BY userMessages'
-        return $this->createQueryBuilder('m')
-            ->join('m.user', 'u')
-            // ->select('COUNT(u) as count')
-            // ->groupBy('u')
-            ->where('m.done = 0')
-            ->getQuery()
-            ->getResult();
-    }
-
-    // public function countMessageByUser()
+    // /**
+    //  * @return Message[] Returns an array of Message objects
+    //  */
+    // public function countMessageNotDoneByUser()
     // {
+    //     // requête personalisé pour récupérer seulement les messages non traités
     //     return $this->createQueryBuilder('m')
-    //         ->select('(m.user) as userMessages, COUNT(m.id) as count')
-    //         ->groupBy('userMessages')
+    //         ->join('m.user', 'u')
+    //         ->where('m.done = 0')
     //         ->getQuery()
     //         ->getResult();
     // }

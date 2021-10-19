@@ -1,12 +1,12 @@
 {{ form_start(form) }}
 <div class="container">
 	<br>
-	<div class="card bg-light">
+	<div class="card bg-light mt-4">
 		<article class="card-body mx-auto" style="max-width: 400px;">
-			<h3 class="card-title mt-3 text-center">Écrivez votre demande ici :</h3>
+			<h4 class="card-title mt-3 text-center">Écrivez votre demande ici :</h4>
 			<br>
 			{{ form_errors(form) }}
-			<div class="form-group input-group text-center">
+			<div class="form-group input-group text-center" style="margin-top: -40px;">
 				{{ form_row(form.content) }}
 			</div>
 			<div class="form-group">

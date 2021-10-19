@@ -1,35 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Message index{% endblock %}
+{% block title %}Mes demandes en cours :
+{% endblock %}
 
 {% block body %}
-    <h1>Message index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Content</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for message in messages %}
-            <tr>
-                <td>{{ message.id }}</td>
-                <td>{{ message.content }}</td>
-                <td>
-                    <a href="{{ path('message_show', {'id': message.id}) }}">show</a>
-                    <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('message_new') }}">Create new</a>
+	<div class="container">
+		<a class="btn btn-secondary col-1" href="{{ path('home') }}" style="position: sticky; top: 80px;">Retour</a>
+		<div class="col-8 mx-auto">
+			<h2>Mes demandes en cours:
+			</h2>
+			<br>
+			{% for message in messages %}
+				<div class="card">
+					<h5 class="card-header">
+						<small style="color: blue;">
+							Le
+							{{message.createdAt | date('d/m/Y')}}
+							à
+							{{message.createdAt | date('H:i')}}
+						</small><br>
+						{% if message.done == 1 %}
+							<small style="color: red">Traité le
+								{{message.doneAt | date('d/m/Y')}}
+								à
+								{{message.doneAt | date('H:i')}}</small>
+						{% endif %}
+					</h5>
+					<div class="card-body">
+						<p class="card-text">{{message.content}}</p>
+					</div>
+				</div>
+				<br>
+			{% endfor %}
+			<br>
+			<br>
+		</div>
+	</div>
 {% endblock %}

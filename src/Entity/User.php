@@ -205,6 +205,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function doneMessage(Message $message): self
+    {
+        $message->getUser($this);
+        $message->setDone(true);
+        return $this;
+    }
+
     public function removeMessage(Message $message): self
     {
         if ($this->messages->removeElement($message)) {

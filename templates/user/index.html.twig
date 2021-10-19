@@ -1,44 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Back Office
+{% block title %}Demandes en cours de
+	{{user.fullName}}
 {% endblock %}
 
 {% block body %}
-	<div class="container">
-		<div class="col-12 mx auto">
-			<br>
-			<h2>Bienvenue sur le Back Office d'administration</h2>
-			<br>
-			<h3>Voici les utilisateurs avec des demandes non traitées:</h3>
-			<br>
 
-			<table class="table">
-				<thead>
-					<tr>
-						<th>Utilisateur</th>
-						<th>Email</th>
-						<th>Nombre de demandes à traiter</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for um in userMessages %}
-						{% if um | length > 0  %}
-							<tr>
-								<td>
-									<a href="{{ path('user_show' , {'id': um.id}) }}">{{ um.fullName }}</a>
-								</td>
-								<td>{{ um.email }}</td>
-								<td>{{ um.messages | length }}</td>
-							</tr>
-						{% endif %}
-					{% else %}
-						<tr>
-							<td colspan="7">Toutes les demandes ont été traitées</td>
-						</tr>
-					{% endfor %}
-				</tbody>
-			</tbody>
-		</table>
-		<a class="btn btn-primary" href="{{ path('index_done') }}">Voir les demandes traitées</a>
+	<div class="container">
+		<a class="btn btn-secondary col-1" href="{{ path('user_index') }}" style="position: sticky; top: 80px;">Retour</a>
+		<div class="col-8 mx-auto">
+			<h2>
+				Demandes en cours de</h2>
+			<h3>{{user.fullName}}:</h3>
+			<br>
+			<h5>
+				Email :
+				{{user.email}}</h5>
+			<br>
+			{% for message in messages %}
+				{% if message.done == 0 %}
+					<div class="card">
+						<h5 class="card-header">
+							<small style="color: blue;">Par
+								{{user.fullName}}
+								le
+								{{message.createdAt | date('d/m/Y')}}
+								à
+								{{message.createdAt | date('H:i')}}</small>
+						</h5>
+						<div class="card-body">
+							<p class="card-text">{{message.content}}</p>
+							{{ include('admin/_done.html.twig') }}
+						</div>
+					</div>
+					<br>
+				{% endif %}
+			{% endfor %}
+			<br>
+			<br>
+		</div>
 	</div>
-</div>{% endblock %}
+	{# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
+{% endblock %}

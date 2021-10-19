@@ -8,6 +8,7 @@
 
 	<br>
 	<div class="container">
+		<a class="btn btn-secondary col-1" href="{{ path('index_done') }}" style="position: sticky; top: 80px;">Retour</a>
 		<div class="col-8 mx-auto">
 			<h2>
 				Demandes en cours de</h2>
@@ -18,29 +19,31 @@
 				{{user.email}}</h5>
 			<br>
 			{% for message in messages %}
-				{% if message.done == 0 %}
+				{% if message.done == 1 %}
 					<div class="card">
 						<h5 class="card-header">
-							<small>Par
+							<small style="color: blue">Par
 								{{user.fullName}}
 								le
 								{{message.createdAt | date('d/m/Y')}}
 								à
-								{{message.createdAt | date('H:i')}}</small>
+								{{message.createdAt | date('H:i')}}</small><br>
+							{% if message.doneAt %}
+								<small style="color: red">Traité le
+									{{message.doneAt | date('d/m/Y')}}
+									à
+									{{message.doneAt | date('H:i')}}</small>
+							{% endif %}
 						</h5>
 						<div class="card-body">
 							<p class="card-text">{{message.content}}</p>
-							{{ include('user/_done.html.twig') }}
-
 						</div>
 					</div>
 					<br>
 				{% endif %}
 			{% endfor %}
-			<a class="btn btn-secondary" href="{{ path('user_index') }}">Retour</a>
 			<br>
 			<br>
 		</div>
 	</div>
-	{# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
 {% endblock %}

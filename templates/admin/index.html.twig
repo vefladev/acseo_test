@@ -4,41 +4,43 @@
 {% endblock %}
 
 {% block body %}
-	<br>
-	<h4>Bonjour
-		{{app.user.prenom}}
-		{{app.user.nom}}
-	</h4>
-	<br>
-	<h4>
-		Voici les demandes à traitées:</h4>
-	<br>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Email</th>
-				<th>Utilisateur</th>
-				<th>Nombre de demande</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for message in messages %}
-				{# {% if message.done == 0 %} #}
-				<tr>
-					<td>
-						{{ message.user.email }}
-					</td>
-					<td>{{ message.user}}</td>
-					<td>
-						{# {{ message.count }} #}
-					</td>
-					<td>
-						<a href="{{ path('user_show', {'id': message.user.id}) }}">
-							Voir</td>
-					</td>
-				</tr>
-			</td>
-		</tbody>
-	</tr>
-</td></tbody></tr></a>{# <a href="{{ path('message_edit', {'id': message.id}) }}">edit</a> #}</tbody></td></tr>{# {% endif %} #}{% else %}<tr><td colspan="3">Aucun résultat</td></tr>{% endfor %}</tbody></tbody> </table> <a href="{{ path('message_traite') }}">Voir les demandes déjà traités</a>{% endblock %}
+	<div class="container">
+		<div class="mx auto">
+			<br>
+			<h2>Bienvenue sur le Back Office d'administration</h2>
+			<br>
+			<h3>Voici les utilisateurs avec des demandes non traitées:</h3>
+			<br>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Utilisateur</th>
+						<th>Email</th>
+						<th>Nombre de demandes à traiter</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for um in userMessages %}
+						{% if um | length > 0  %}
+							<tr>
+								<td class>
+									<a href="{{ path('user_show' , {'id': um.id}) }}">{{ um.fullName }}</a>
+								</td>
+								<td>{{ um.email }}</td>
+								<td>
+									<span style="padding: 12px; background-color: red; margin-left: 90px" class="badge badge-primary badge-pill">{{ um.messages | length }}</span>
+								</td>
+							</tr>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td colspan="7">Toutes les demandes ont été traitées</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</tbody>
+		</table>
+		<br>
+		<a class="btn btn-primary" href="{{ path('index_done') }}">Voir les demandes déjà traitées</a>
+	</div>
+</div>{% endblock %}
