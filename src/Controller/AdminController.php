@@ -65,7 +65,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/user/{id}/message', name: 'message_traitement', methods: ['POST'])]
-    public function traitement(Message $message): Response
+    public function traitement(Message $message, Request $request): Response
     {
         //fonction qui me permet de définir les messages comme traités
         // et de définir la date a laquelle il est traité
@@ -73,6 +73,8 @@ class AdminController extends AbstractController
         $message->setDone(true);
         $message->setDoneAt(new DateTimeImmutable());
         $em->flush();
+        // on fait un message flash
+        $this->addFlash('success', 'Le message n°:' . $message->getId() . ' a bien été traité');
         return $this->redirectToRoute('user_show', ['id' => $message->getUser()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

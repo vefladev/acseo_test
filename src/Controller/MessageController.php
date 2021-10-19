@@ -40,7 +40,7 @@ class MessageController extends AbstractController
         // requête
         $form->handleRequest($request);
         // si le formulaire est valide, alors on enregister en bdd
-        if ($form->isSubmitted() && $form->isValid()) {
+        if (!$form->isEmpty() && $form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($message);
             $entityManager->flush();
@@ -63,12 +63,13 @@ class MessageController extends AbstractController
                 // sinon on retourne une erreur
                 $e = 'erreur' . $e->getFile();
             }
+            // on fait un message flash
             $this->addFlash('success', 'Votre demande a bien été envoyé');
             // puis enfin on redirige si tout c'est bien passé
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
-            // sinon on retourne une erreur 
-        } else {
-            $this->addFlash('danger', "Il y a un problème votre demande n'a pas pu être envoyé");
+        } elseif ($form->isEmpty() || $form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('danger', 'Votre demande a bien été envoyé');
+            return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
         // la vue formulaire d'un nouveau message
         return $this->renderForm('message/new.html.twig', [
