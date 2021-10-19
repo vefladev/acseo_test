@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
+    // formulaire permettant de créer des utilisateurs
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -16,8 +17,7 @@ class UserType extends AbstractType
             ->add('roles')
             ->add('password')
             ->add('nom')
-            ->add('prenom')
-        ;
+            ->add('prenom');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

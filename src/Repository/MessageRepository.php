@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Message;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,17 +30,4 @@ class MessageRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-    // /**
-    //  * @return Message[] Returns an array of Message objects
-    //  */
-    // public function countMessageNotDoneByUser()
-    // {
-    //     // requête personalisé pour récupérer seulement les messages non traités
-    //     return $this->createQueryBuilder('m')
-    //         ->join('m.user', 'u')
-    //         ->where('m.done = 0')
-    //         ->getQuery()
-    //         ->getResult();
-    // }
 }

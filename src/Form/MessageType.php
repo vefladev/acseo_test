@@ -22,6 +22,7 @@ class MessageType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        // formulaire permettant de créer un nouveau message
         $user = $this->security->getUser();
         $builder
             ->add('content', TextareaType::class, [
