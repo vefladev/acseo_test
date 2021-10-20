@@ -68,7 +68,7 @@ class MessageController extends AbstractController
             // puis enfin on redirige si tout c'est bien passé
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         } elseif ($form->isEmpty() || $form->isSubmitted() && !$form->isValid()) {
-            $this->addFlash('danger', 'Votre demande a bien été envoyé');
+            $this->addFlash('danger', "Problème! Votre demande n'a pas pu être envoyé");
             return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
         }
         // la vue formulaire d'un nouveau message
